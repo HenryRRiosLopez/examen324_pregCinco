@@ -1,0 +1,18 @@
+
+SELECT tmp.sigla sigla,
+CASE WHEN p1.departamento='101' THEN AVG(n1.nota_final) else 0 END CH,
+CASE WHEN p1.departamento='102' THEN AVG(n1.nota_final) else 0 END LP,
+CASE WHEN p1.departamento='103' THEN AVG(n1.nota_final) else 0 END CB,
+CASE WHEN p1.departamento='104' THEN AVG(n1.nota_final) else 0 END 'OR',
+CASE WHEN p1.departamento='105' THEN AVG(n1.nota_final) else 0 END PT,
+CASE WHEN p1.departamento='106' THEN AVG(n1.nota_final) else 0 END TJ,
+CASE WHEN p1.departamento='107' THEN AVG(n1.nota_final) else 0 END SC,
+CASE WHEN p1.departamento='108' THEN AVG(n1.nota_final) else 0 END BE,
+CASE WHEN p1.departamento='109' THEN AVG(n1.nota_final) else 0 END PD
+FROM persona p1, nota n1, (SELECT n.sigla sigla, p.departamento dep
+							FROM nota n, persona p
+							WHERE n.ci = p.ci
+							ORDER BY p.departamento)tmp 
+WHERE p1.ci = n1.ci AND tmp.dep = p1.departamento AND tmp.sigla = n1.sigla
+GROUP BY tmp.sigla
+
